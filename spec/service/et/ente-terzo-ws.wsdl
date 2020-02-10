@@ -22,6 +22,10 @@
            <xs:element name="RequestRiceviIstanzaMessage" type="msgtype:IstanzaType"/>
            <xs:element name="ResponseRiceviIstanzaMessage" type="msgtype:HeaderIstanzaType"/>
             
+            
+           <xs:element name="RequestRiceviConclusioneIstanzaMessage" type="msgtype:ConclusioneIstanzaType"/>
+           <xs:element name="ResponseRiceviConclusioneIstanzaMessage" type="msgtype:HeaderIstanzaType"/>
+            
                  
         </xs:schema>
         
@@ -38,6 +42,15 @@
         <wsdl:part name="parameters" element="tns:ResponseRiceviIstanzaMessage"/>
     </wsdl:message>
     
+    <wsdl:message name="RequestRiceviConclusioneIstanzaMessage">
+        <wsdl:part name="parameters" element="tns:RequestRiceviConclusioneIstanzaMessage"/>
+    </wsdl:message>
+    
+    <wsdl:message name="ResponseRiceviConclusioneIstanzaMessage">
+        <wsdl:part name="parameters" element="tns:ResponseRiceviConclusioneIstanzaMessage"/>
+    </wsdl:message>
+    
+    
     <wsdl:message name="GenericErrorMessage">
         <wsdl:part name="code" type="xs:int"/>
         <wsdl:part name="message" type="xs:string"/>
@@ -53,6 +66,12 @@
             <wsdl:fault message="tns:GenericErrorMessage" name="GenericFault"/>
         </wsdl:operation>
         
+        <wsdl:operation name="RiceviConclusioneIstanza">
+            <wsdl:input message="tns:RequestRiceviConclusioneIstanzaMessage" name="RequestRiceviConclusioneIstanza"/>
+            <wsdl:output message="tns:ResponseRiceviConclusioneIstanzaMessage" name="ResponseRiceviConclusioneIstanza"/>
+            <wsdl:fault message="tns:GenericErrorMessage" name="GenericFault"/>
+        </wsdl:operation>
+        
     </wsdl:portType>
     
     
@@ -61,12 +80,26 @@
     
     <wsdl:binding name="EnteTerzoServiceBinding" type="tns:EnteTerzoServicePort">
         <wsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        
         <wsdl:operation name="RiceviIstanza">
             <wsoap12:operation soapAction="http://www.agid.gov.it/ssu/ws/ente-terzo/service/RiceviIstanza" style="document"/>
             <wsdl:input name="RequestRiceviIstanza">              
                 <wsoap12:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="ResponseRiceviIstanza">              
+                <wsoap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ReceiveFault">
+                <wsoap12:body use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        
+        <wsdl:operation name="RiceviConclusioneIstanza">
+            <wsoap12:operation soapAction="http://www.agid.gov.it/ssu/ws/ente-terzo/service/RiceviConclusioneIstanza" style="document"/>
+            <wsdl:input name="RequestRiceviConclusioneIstanza">              
+                <wsoap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ResponseRiceviConclusioneIstanza">              
                 <wsoap12:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="ReceiveFault">

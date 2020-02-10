@@ -6,6 +6,7 @@
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
     xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/"
     xmlns:tns="http://www.agid.gov.it/ssu/ws/registry/service"
+    
     targetNamespace="http://www.agid.gov.it/ssu/ws/registry/service">
 
 

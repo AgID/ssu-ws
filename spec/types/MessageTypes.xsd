@@ -11,49 +11,18 @@
     >
     
     
-    <xs:complexType name="fileBaseType">
-        <xs:sequence>
-            <xs:element name="FileName" type="msgtype:fileNameType"/> 
-            <xs:element name="File" type="xs:base64Binary"  xmime:expectedContentTypes="*/*" />
-        </xs:sequence>
-     </xs:complexType>
-    
-    <xs:simpleType name="fileNameType">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="^[a-zA-Z0-9._ -]+$"/>
-            <!-- 
-                TODO: cercare fonte per controllo nomi file (escludere caratteri -> possibili problemi di salvataggio su sistemi win)
-                verificare anche limiti di size
-            -->
-        </xs:restriction>
-    </xs:simpleType>
     
     
-    <xs:complexType name="fileModuloType">
-        <xs:complexContent>
-            <xs:extension base="msgtype:fileBaseType">
-                <xs:sequence>
-                    <xs:element name="rootElementType" type="xs:NCName"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
+     
     
-    <xs:complexType name="ModuloIstanzaType">
-        <xs:sequence>
-            <xs:element name="binaryFile" type="msgtype:fileNameType"/>
-            <xs:element name="xmlBinaryFile" type="msgtype:fileModuloType" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
-    
+    <!-- Istanza -->
     
     <xs:complexType name="IstanzaType">
         <xs:sequence>
-            <xs:element name="header" type="msgtype:HeaderIstanzaType"/>
-            <xs:element name="payload" type="msgtype:PayloadIstanzaType"/>
+            <xs:element name="Header" type="msgtype:HeaderIstanzaType"/>
+            <xs:element name="Payload" type="msgtype:PayloadIstanzaType"/>
         </xs:sequence>
     </xs:complexType>
-    
     
     <xs:complexType name="HeaderIstanzaType">
         <xs:sequence>
@@ -62,21 +31,167 @@
         </xs:sequence>
     </xs:complexType>
     
-    
     <xs:complexType name="PayloadIstanzaType">
         <xs:sequence>
-            <xs:element name="modulo" type="msgtype:ModuloIstanzaType" />
-            <xs:element name="altriAllegati">
+            <xs:element name="Modulo" type="msgtype:FileType"/>
+            <xs:element name="AltriAllegati">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="allegato" type="msgtype:fileBaseType" minOccurs="0" maxOccurs="unbounded" />
+                        <xs:element name="Allegato" type="msgtype:FileType" minOccurs="0" maxOccurs="unbounded" />
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
     </xs:complexType>
     
+    <!-- Conclusione Istanza -->
     
+    <xs:complexType name="ConclusioneIstanzaType">
+        <xs:sequence>
+            <xs:element name="Header" type="msgtype:HeaderConclusioneIstanzaType"/>
+            <xs:element name="Payload" type="msgtype:PayloadConclusioneIstanzaType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    
+    <xs:complexType name="HeaderConclusioneIstanzaType">
+        <xs:complexContent>
+            <xs:extension base="msgtype:HeaderIstanzaType">
+                <!-- Specialization Hook  -->
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:complexType name="PayloadConclusioneIstanzaType">
+        <xs:sequence>
+            <xs:element name="Esito" type="msgtype:EsitoType"/>
+            <xs:element name="ProvvedimentoFinale" type="msgtype:FileType"/>
+        </xs:sequence> 
+    </xs:complexType>
+
+
+
+    <!-- Parere Ente Terzo -->
+    
+   
+    <xs:complexType name="ParereEnteTerzoType">
+        <xs:sequence>
+            <xs:element name="Header" type="msgtype:HeaderParereEnteTerzoType"/>
+            <xs:element name="Payload" type="msgtype:PayloadParereEnteTerzoType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="HeaderParereEnteTerzoType">
+        <xs:complexContent>
+            <xs:extension base="msgtype:HeaderIstanzaType">
+                <!-- Specialization Hook  -->
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:complexType name="PayloadParereEnteTerzoType">
+        <xs:sequence>
+            <xs:element name="Esito" type="msgtype:EsitoParereEnteTerzoType"/>
+            <xs:element name="Parere">
+                <xs:complexType >
+                    <xs:sequence>
+                        <xs:element name="BinaryFile" type="msgtype:BinaryFileType"/>
+                        <xs:element name="XMLBinaryFile" type="msgtype:BinaryFileType" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="AltriAllegati">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Allegato" type="msgtype:BinaryFileType" minOccurs="0" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="EsitoParereEnteTerzoType">
+        <xs:complexContent>
+            <xs:extension base="msgtype:EsitoType">
+                <!-- Specialization Hook  -->
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    
+    
+    
+    
+    
+    
+    <!-- Basic Type -->
+    
+    <xs:complexType name="FileType">
+        <xs:sequence>
+            <xs:element name="BinaryFile" type="msgtype:BinaryFileType"/> 
+            <xs:element name="XMLBinaryFile" type="msgtype:XMLBinaryFileType" minOccurs="0"  />
+        </xs:sequence>
+    </xs:complexType>
+    
+    
+    <xs:complexType name="BinaryFileType">
+        <xs:sequence>
+            <xs:element name="FileName" type="msgtype:FileNameType"/> 
+            <xs:element name="File" type="xs:base64Binary"  xmime:expectedContentTypes="*/*" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="XMLBinaryFileType">
+        <xs:complexContent>
+            <xs:extension base="msgtype:BinaryFileType">
+                <xs:attribute name="rootElementType" type="xs:NCName" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:complexType name="EsitoType">
+        <xs:choice>
+            <xs:element name="positivo" type="msgtype:EsitoPositivoType"/>
+            <xs:element name="negativo" type="msgtype:EsitoNegativoType"/>
+        </xs:choice>
+    </xs:complexType>
+    
+    <xs:complexType name="EsitoPositivoType">
+        <xs:sequence>
+            <xs:element name="positivo">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="motivazione" type="xs:string" minOccurs="0"/>
+                    </xs:sequence>
+                    <xs:attribute name="value" type="xs:boolean" fixed="true"></xs:attribute>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="EsitoNegativoType">
+        <xs:sequence>
+            <xs:element name="positivo">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="motivazione" type="xs:string" />
+                    </xs:sequence>
+                    <xs:attribute name="value" type="xs:boolean" fixed="true"></xs:attribute>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+ 
+    <xs:simpleType name="FileNameType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="^[a-zA-Z0-9._ -]+$"/>
+            <!-- 
+                TODO: cercare fonte per controllo nomi file (escludere caratteri -> possibili problemi di salvataggio su sistemi win)
+                verificare anche limiti di size
+            -->
+        </xs:restriction>
+    </xs:simpleType>
     
     <xs:simpleType name="IDIstanzaType">
         <xs:restriction base="xs:nonNegativeInteger"/>

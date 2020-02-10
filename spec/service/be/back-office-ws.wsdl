@@ -21,6 +21,10 @@
             <xs:element name="RequestRiceviIstanzaMessage" type="msgtype:IstanzaType"/>
             <xs:element name="ResponseRiceviIstanzaMessage" type="msgtype:HeaderIstanzaType"/>
             
+            <xs:element name="RequestRiceviParereEnteTerzoMessage" type="msgtype:ParereEnteTerzoType"/>
+            <xs:element name="ResponseRiceviParereEnteTerzoMessage" type="msgtype:HeaderParereEnteTerzoType"/>
+            
+            
             
         </xs:schema>
         
@@ -35,6 +39,16 @@
     <wsdl:message name="ResponseRiceviIstanzaMessage">
         <wsdl:part name="parameters" element="tns:ResponseRiceviIstanzaMessage"/>
     </wsdl:message>
+    
+    
+    <wsdl:message name="RequestRiceviParereEnteTerzoMessage">
+        <wsdl:part name="parameters" element="tns:RequestRiceviParereEnteTerzoMessage"/>
+    </wsdl:message>
+    
+    <wsdl:message name="ResponseRiceviParereEnteTerzoMessage">
+        <wsdl:part name="parameters" element="tns:ResponseRiceviParereEnteTerzoMessage"/>
+    </wsdl:message>
+    
     
     <wsdl:message name="GenericErrorMessage">
         <wsdl:part name="code" type="xs:int"/>
@@ -51,6 +65,12 @@
             <wsdl:fault message="tns:GenericErrorMessage" name="GenericFault"/>
         </wsdl:operation>
         
+        <wsdl:operation name="RiceviParereEnteTerzo">
+            <wsdl:input message="tns:RequestRiceviParereEnteTerzoMessage" name="RequestRiceviParereEnteTerzo"/>
+            <wsdl:output message="tns:ResponseRiceviParereEnteTerzoMessage" name="ResponseRiceviParereEnteTerzo"/>
+            <wsdl:fault message="tns:GenericErrorMessage" name="GenericFault"/>
+        </wsdl:operation>
+        
     </wsdl:portType>
     
     
@@ -59,6 +79,7 @@
     
     <wsdl:binding name="BackOfficeServiceBinding" type="tns:BackOfficeServicePort">
         <wsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        
         <wsdl:operation name="RiceviIstanza">
             <wsoap12:operation soapAction="http://www.agid.gov.it/ssu/ws/ente-terzo/service/RiceviIstanza" style="document"/>
             <wsdl:input name="RequestRiceviIstanza">              
@@ -71,6 +92,20 @@
                 <wsoap12:body use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
+        
+        <wsdl:operation name="RiceviParereEnteTerzo">
+            <wsoap12:operation soapAction="http://www.agid.gov.it/ssu/ws/ente-terzo/service/RiceviParereEnteTerzo" style="document"/>
+            <wsdl:input name="RequestRiceviParereEnteTerzo">              
+                <wsoap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ResponseRiceviParereEnteTerzo">              
+                <wsoap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ReceiveFault">
+                <wsoap12:body use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        
     </wsdl:binding>
     
     
@@ -78,6 +113,7 @@
     
     <wsdl:service name="BackOfficeService">
         <wsdl:port binding="tns:BackOfficeServiceBinding" name="BackOfficeService">
+            <soap:address location="http://localhost:8080/ssu-test/back-office/ws"/>
         </wsdl:port>
     </wsdl:service>
     
