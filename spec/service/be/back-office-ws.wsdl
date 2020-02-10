@@ -1,12 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions targetNamespace="http://www.example.com/webservice"
-    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
-    xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
-    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-    xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/"
-    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
-    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<wsdl:definitions 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ws="http://www.example.com/webservice">
+    xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+    
+    xmlns:tns="http://www.agid.gov.it/ssu/ws/back-office/service"
+    targetNamespace="http://www.agid.gov.it/ssu/ws/back-office/service">
+    
+    <wsdl:types>
+        <xs:schema 
+            targetNamespace="http://www.agid.gov.it/ssu/ws/back-office/service"
+            xmlns:msgtype="http://www.agid.gov.it/ssu/ws/message/types"
+            >
+            
+            <xs:import namespace="http://www.agid.gov.it/ssu/ws/message/types" schemaLocation="../../types/MessageTypes.xsd" ></xs:import>
+            
+            
+            <xs:element name="RequestRiceviIstanzaMessage" type="msgtype:IstanzaType"/>
+            <xs:element name="ResponseRiceviIstanzaMessage" type="msgtype:HeaderIstanzaType"/>
+            
+            
+        </xs:schema>
+        
+    </wsdl:types>
+    
+    
+    <!-- MESSAGES -->
+    <wsdl:message name="RequestRiceviIstanzaMessage">
+        <wsdl:part name="parameters" element="tns:RequestRiceviIstanzaMessage"/>
+    </wsdl:message>
+    
+    <wsdl:message name="ResponseRiceviIstanzaMessage">
+        <wsdl:part name="parameters" element="tns:ResponseRiceviIstanzaMessage"/>
+    </wsdl:message>
+    
+    <wsdl:message name="GenericErrorMessage">
+        <wsdl:part name="code" type="xs:int"/>
+        <wsdl:part name="message" type="xs:string"/>
+    </wsdl:message>
+    
+    
+    <!-- PORT TYPE -->
+    <wsdl:portType name="BackOfficeServicePort">
+        
+        <wsdl:operation name="RiceviIstanza">
+            <wsdl:input message="tns:RequestRiceviIstanzaMessage" name="RequestRiceviIstanza"/>
+            <wsdl:output message="tns:ResponseRiceviIstanzaMessage" name="ResponseRiceviIstanza"/>
+            <wsdl:fault message="tns:GenericErrorMessage" name="GenericFault"/>
+        </wsdl:operation>
+        
+    </wsdl:portType>
+    
+    
+    
+    <!-- PORT BINDING -->
+    
+    <wsdl:binding name="BackOfficeServiceBinding" type="tns:BackOfficeServicePort">
+        <wsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="RiceviIstanza">
+            <wsoap12:operation soapAction="http://www.agid.gov.it/ssu/ws/ente-terzo/service/RiceviIstanza" style="document"/>
+            <wsdl:input name="RequestRiceviIstanza">              
+                <wsoap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ResponseRiceviIstanza">              
+                <wsoap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ReceiveFault">
+                <wsoap12:body use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    
+    
+    <!-- SERVICE  -->  
+    
+    <wsdl:service name="BackOfficeService">
+        <wsdl:port binding="tns:BackOfficeServiceBinding" name="BackOfficeService">
+        </wsdl:port>
+    </wsdl:service>
+    
     
 </wsdl:definitions>

@@ -1,4 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:schema 
+      xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+      xmlns:msgtype="http://www.agid.gov.it/ssu/ws/message/types"
+      
+      targetNamespace="http://www.agid.gov.it/ssu/ws/message/types"
+      elementFormDefault="qualified" 
+      attributeFormDefault="qualified"          
+      version="1.0"		 
+    >
+    
+    
+    <xs:complexType name="fileBaseType">
+        <xs:sequence>
+            <xs:element name="FileName" type="msgtype:fileNameType"/> 
+            <xs:element name="File" type="xs:base64Binary"  xmime:expectedContentTypes="*/*" />
+        </xs:sequence>
+     </xs:complexType>
+    
+    <xs:simpleType name="fileNameType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="^[a-zA-Z0-9._ -]+$"/>
+            <!-- 
+                TODO: cercare fonte per controllo nomi file (escludere caratteri -> possibili problemi di salvataggio su sistemi win)
+                verificare anche limiti di size
+            -->
+        </xs:restriction>
+    </xs:simpleType>
+    
+    
+    <xs:complexType name="fileModuloType">
+        <xs:complexContent>
+            <xs:extension base="msgtype:fileBaseType">
+                <xs:sequence>
+                    <xs:element name="rootElementType" type="xs:NCName"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:complexType name="ModuloIstanzaType">
+        <xs:sequence>
+            <xs:element name="binaryFile" type="msgtype:fileNameType"/>
+            <xs:element name="xmlBinaryFile" type="msgtype:fileModuloType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    
+    <xs:complexType name="IstanzaType">
+        <xs:sequence>
+            <xs:element name="header" type="msgtype:HeaderIstanzaType"/>
+            <xs:element name="payload" type="msgtype:PayloadIstanzaType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    
+    <xs:complexType name="HeaderIstanzaType">
+        <xs:sequence>
+            <xs:element name="ID" type="msgtype:IDIstanzaType"/>
+            <xs:element name="IDProcedimento" type="msgtype:IDProcedimentoType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    
+    <xs:complexType name="PayloadIstanzaType">
+        <xs:sequence>
+            <xs:element name="modulo" type="msgtype:ModuloIstanzaType" />
+            <xs:element name="altriAllegati">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="allegato" type="msgtype:fileBaseType" minOccurs="0" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    
+    
+    <xs:simpleType name="IDIstanzaType">
+        <xs:restriction base="xs:nonNegativeInteger"/>
+    </xs:simpleType>
+    <xs:simpleType name="IDProcedimentoType">
+        <xs:restriction base="xs:nonNegativeInteger"/>
+    </xs:simpleType>
+    
     
 </xs:schema>
