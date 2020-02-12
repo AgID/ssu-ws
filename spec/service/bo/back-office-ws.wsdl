@@ -23,7 +23,7 @@
             <xs:element name="RequestRiceviParereEnteTerzoMessage" type="msgtype:ParereEnteTerzoType"/>
             <xs:element name="ResponseRiceviParereEnteTerzoMessage" type="msgtype:HeaderParereEnteTerzoType"/>
             
-             <xs:element name="BackOfficeFaultMessage" type="msgtype:GenericFaultType"/>
+            <xs:element name="BackOfficeFaultMessage" type="msgtype:GenericFaultType"/>
             
        
         </xs:schema>

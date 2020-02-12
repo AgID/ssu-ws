@@ -24,6 +24,8 @@
             
            <xs:element name="RequestRiceviConclusioneIstanzaMessage" type="msgtype:ConclusioneIstanzaType"/>
            <xs:element name="ResponseRiceviConclusioneIstanzaMessage" type="msgtype:HeaderIstanzaType"/>
+           
+           <xs:element name="EnteTerzoFaultMessage" type="msgtype:GenericFaultType"/>
             
         </xs:schema>
         
@@ -49,10 +51,10 @@
     </wsdl:message>
     
     
-    <wsdl:message name="GenericErrorMessage">
-        <wsdl:part name="code" type="xs:int"/>
-        <wsdl:part name="message" type="xs:string"/>
-    </wsdl:message>
+   
+    <wsdl:message name="EnteTerzoFaultMessage">
+	    <wsdl:part name="fault" element="tns:EnteTerzoFaultMessage" /> 
+	</wsdl:message>
     
     
     <!-- PORT TYPE -->
@@ -61,13 +63,13 @@
         <wsdl:operation name="RiceviIstanza">
             <wsdl:input message="tns:RequestRiceviIstanzaMessage" name="RequestRiceviIstanza"/>
             <wsdl:output message="tns:ResponseRiceviIstanzaMessage" name="ResponseRiceviIstanza"/>
-            <wsdl:fault message="tns:GenericErrorMessage" name="GenericFault"/>
+            <wsdl:fault message="tns:EnteTerzoFaultMessage" name="EnteTerzoFault"/>
         </wsdl:operation>
         
         <wsdl:operation name="RiceviConclusioneIstanza">
             <wsdl:input message="tns:RequestRiceviConclusioneIstanzaMessage" name="RequestRiceviConclusioneIstanza"/>
             <wsdl:output message="tns:ResponseRiceviConclusioneIstanzaMessage" name="ResponseRiceviConclusioneIstanza"/>
-            <wsdl:fault message="tns:GenericErrorMessage" name="GenericFault"/>
+            <wsdl:fault message="tns:EnteTerzoFaultMessage" name="EnteTerzoFault"/>
         </wsdl:operation>
         
     </wsdl:portType>
@@ -87,7 +89,7 @@
             <wsdl:output name="ResponseRiceviIstanza">              
                 <wsoap12:body use="literal"/>
             </wsdl:output>
-            <wsdl:fault name="ReceiveFault">
+            <wsdl:fault name="EnteTerzoFault">
                 <wsoap12:body use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
@@ -100,7 +102,7 @@
             <wsdl:output name="ResponseRiceviConclusioneIstanza">              
                 <wsoap12:body use="literal"/>
             </wsdl:output>
-            <wsdl:fault name="ReceiveFault">
+            <wsdl:fault name="EnteTerzoFault">
                 <wsoap12:body use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
