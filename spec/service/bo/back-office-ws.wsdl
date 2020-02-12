@@ -87,7 +87,7 @@
             <wsdl:output name="ResponseRiceviIstanza">              
                 <wsoap12:body use="literal"/>
             </wsdl:output>
-            <wsdl:fault name="ReceiveFault">
+            <wsdl:fault name="GenericFault">
                 <wsoap12:body use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
@@ -100,7 +100,7 @@
             <wsdl:output name="ResponseRiceviParereEnteTerzo">              
                 <wsoap12:body use="literal"/>
             </wsdl:output>
-            <wsdl:fault name="ReceiveFault">
+            <wsdl:fault name="GenericFault">
                 <wsoap12:body use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
