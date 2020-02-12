@@ -9,10 +9,6 @@
       attributeFormDefault="qualified"          
       version="1.0"		 
     >
-    
-    
-    
-    
      
     
     <!-- Istanza -->
@@ -70,9 +66,35 @@
     </xs:complexType>
 
 
+    <!-- Istanza Ente Terzo -->
+    <xs:complexType name="IstanzaEnteTerzoType">
+        <xs:sequence>
+            <xs:element name="Header" type="msgtype:HeaderIstanzaEnteTerzoType"/>
+            <xs:element name="Payload" type="msgtype:PayloadIstanzaType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="HeaderIstanzaEnteTerzoType">
+        <xs:complexContent>
+            <xs:extension base="msgtype:HeaderIstanzaType">
+                <xs:sequence>
+                    <xs:element name="IDEndoProcedimento" type="msgtype:IDProcedimentoType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+       
+    </xs:complexType>
+    
+    <xs:complexType name="PayloadIstanzaEnteTerzoType">
+        <xs:complexContent>
+            <xs:extension base="msgtype:PayloadIstanzaType">
+                <!-- Hook  -->
+            </xs:extension>
+        </xs:complexContent>
+        
+    </xs:complexType>
 
     <!-- Parere Ente Terzo -->
-    
    
     <xs:complexType name="ParereEnteTerzoType">
         <xs:sequence>
@@ -84,7 +106,7 @@
     <xs:complexType name="HeaderParereEnteTerzoType">
         <xs:complexContent>
             <xs:extension base="msgtype:HeaderIstanzaType">
-                <!-- Specialization Hook  -->
+                <!-- Hook  -->
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -113,15 +135,10 @@
     <xs:complexType name="EsitoParereEnteTerzoType">
         <xs:complexContent>
             <xs:extension base="msgtype:EsitoType">
-                <!-- Specialization Hook  -->
+                <!-- Hook  -->
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    
-    
-    
-    
-    
     
     
     <!-- Basic Type -->

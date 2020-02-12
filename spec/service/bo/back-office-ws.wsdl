@@ -12,8 +12,7 @@
     <wsdl:types>
         <xs:schema 
             targetNamespace="http://www.agid.gov.it/ssu/ws/back-office/service"
-            xmlns:msgtype="http://www.agid.gov.it/ssu/ws/message/types"
-            >
+            xmlns:msgtype="http://www.agid.gov.it/ssu/ws/message/types">
             
             <xs:import namespace="http://www.agid.gov.it/ssu/ws/message/types" schemaLocation="../../types/MessageTypes.xsd" ></xs:import>
             

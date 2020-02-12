@@ -13,20 +13,18 @@
     <wsdl:types>
         <xs:schema 
            targetNamespace="http://www.agid.gov.it/ssu/ws/ente-terzo/service"
-           xmlns:msgtype="http://www.agid.gov.it/ssu/ws/message/types"
-           >
+           xmlns:msgtype="http://www.agid.gov.it/ssu/ws/message/types">
             
            <xs:import namespace="http://www.agid.gov.it/ssu/ws/message/types" schemaLocation="../../types/MessageTypes.xsd" ></xs:import>
             
             
-           <xs:element name="RequestRiceviIstanzaMessage" type="msgtype:IstanzaType"/>
-           <xs:element name="ResponseRiceviIstanzaMessage" type="msgtype:HeaderIstanzaType"/>
+           <xs:element name="RequestRiceviIstanzaMessage" type="msgtype:IstanzaEnteTerzoType"/>
+           <xs:element name="ResponseRiceviIstanzaMessage" type="msgtype:HeaderIstanzaEnteTerzoType"/>
             
             
            <xs:element name="RequestRiceviConclusioneIstanzaMessage" type="msgtype:ConclusioneIstanzaType"/>
            <xs:element name="ResponseRiceviConclusioneIstanzaMessage" type="msgtype:HeaderIstanzaType"/>
             
-                 
         </xs:schema>
         
        
