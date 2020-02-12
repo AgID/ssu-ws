@@ -198,6 +198,14 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+
+	<xs:complexType name="GenericFaultType">
+		<xs:sequence>
+			<xs:element name="code" type="xs:int" />
+			<xs:element name="message" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+            
     
  
     <xs:simpleType name="FileNameType">

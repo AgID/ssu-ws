@@ -23,8 +23,9 @@
             <xs:element name="RequestRiceviParereEnteTerzoMessage" type="msgtype:ParereEnteTerzoType"/>
             <xs:element name="ResponseRiceviParereEnteTerzoMessage" type="msgtype:HeaderParereEnteTerzoType"/>
             
+             <xs:element name="BackOfficeFaultMessage" type="msgtype:GenericFaultType"/>
             
-            
+       
         </xs:schema>
         
     </wsdl:types>
@@ -49,10 +50,10 @@
     </wsdl:message>
     
     
-    <wsdl:message name="GenericErrorMessage">
-        <wsdl:part name="code" type="xs:int"/>
-        <wsdl:part name="message" type="xs:string"/>
-    </wsdl:message>
+    
+    <wsdl:message name="BackOfficeFaultMessage">
+	    <wsdl:part name="fault" element="tns:BackOfficeFaultMessage" /> 
+	</wsdl:message>
     
     
     <!-- PORT TYPE -->
@@ -61,13 +62,13 @@
         <wsdl:operation name="RiceviIstanza">
             <wsdl:input message="tns:RequestRiceviIstanzaMessage" name="RequestRiceviIstanza"/>
             <wsdl:output message="tns:ResponseRiceviIstanzaMessage" name="ResponseRiceviIstanza"/>
-            <wsdl:fault message="tns:GenericErrorMessage" name="GenericFault"/>
+            <wsdl:fault message="tns:BackOfficeFaultMessage" name="BackOfficeFault"/>
         </wsdl:operation>
         
         <wsdl:operation name="RiceviParereEnteTerzo">
             <wsdl:input message="tns:RequestRiceviParereEnteTerzoMessage" name="RequestRiceviParereEnteTerzo"/>
             <wsdl:output message="tns:ResponseRiceviParereEnteTerzoMessage" name="ResponseRiceviParereEnteTerzo"/>
-            <wsdl:fault message="tns:GenericErrorMessage" name="GenericFault"/>
+            <wsdl:fault message="tns:BackOfficeFaultMessage" name="BackOfficeFault"/> 
         </wsdl:operation>
         
     </wsdl:portType>
@@ -87,7 +88,7 @@
             <wsdl:output name="ResponseRiceviIstanza">              
                 <wsoap12:body use="literal"/>
             </wsdl:output>
-            <wsdl:fault name="GenericFault">
+            <wsdl:fault name="BackOfficeFault">
                 <wsoap12:body use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
@@ -100,7 +101,7 @@
             <wsdl:output name="ResponseRiceviParereEnteTerzo">              
                 <wsoap12:body use="literal"/>
             </wsdl:output>
-            <wsdl:fault name="GenericFault">
+            <wsdl:fault name="BackOfficeFault">
                 <wsoap12:body use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
