@@ -40,6 +40,77 @@
         </xs:sequence>
     </xs:complexType>
     
+    <!-- Richiesta Integrazione -->
+    
+    <xs:complexType name="RichiestaIntegrazioneType">
+        <xs:sequence>
+            <xs:element name="Header" type="msgtype:HeaderRichiestaIntegrazioneType"/>
+            <xs:element name="Payload" type="msgtype:PayloadRichiestaIntegrazioneType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="HeaderRichiestaIntegrazioneType">
+        <xs:complexContent>
+            <xs:extension base="msgtype:HeaderIstanzaType">
+                <!-- Specialization Hook  -->
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    
+    <xs:complexType name="PayloadRichiestaIntegrazioneType">
+        <xs:sequence>
+            <xs:element name="Richiesta" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="QueryExpression" type="msgtype:expression" />
+                        <xs:element name="QueryDescription" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>      
+        </xs:sequence>
+    </xs:complexType>
+    
+    
+    <!-- Integrazione -->
+    
+    <xs:complexType name="IntegrazioneType">
+        <xs:sequence>
+            <xs:element name="Header" type="msgtype:HeaderIntegrazioneType"/>
+            <xs:element name="Payload" type="msgtype:PayloadIntegrazioneType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    
+    <xs:complexType name="HeaderIntegrazioneType">
+        <xs:complexContent>
+            <xs:extension base="msgtype:HeaderIstanzaType">
+                <!-- Specialization Hook  -->
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:complexType name="PayloadIntegrazioneType">
+        <xs:sequence>
+            <xs:element name="Integrazione" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="RequestExpression" type="msgtype:expression" />
+                        <xs:element name="ModuloPart" type="msgtype:FileType"/>
+                        <xs:element name="AltriAllegati">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Allegato" type="msgtype:FileType" minOccurs="0" maxOccurs="unbounded" />
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>      
+        </xs:sequence>
+    </xs:complexType>
+    
+    
     <!-- Conclusione Istanza -->
     
     <xs:complexType name="ConclusioneIstanzaType">
@@ -225,5 +296,18 @@
         <xs:restriction base="xs:nonNegativeInteger"/>
     </xs:simpleType>
     
+    
+    <xs:simpleType name="expression">
+        <xs:annotation>
+            <xs:documentation> An XPath 2.0 expression. </xs:documentation>
+            <xs:documentation>Referenced into XSLT XSD Spec (version 3.0 and 2.0)
+                - https://www.w3.org/TR/2017/REC-xslt-30-20170608/schema-for-xslt30.xsd
+                - https://www.w3.org/2007/schema-for-xslt20.xsd
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
     
 </xs:schema>

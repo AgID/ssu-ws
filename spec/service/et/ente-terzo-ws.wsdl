@@ -17,10 +17,11 @@
             
            <xs:import namespace="http://www.agid.gov.it/ssu/ws/message/types" schemaLocation="../../types/MessageTypes.xsd" ></xs:import>
             
-            
            <xs:element name="RequestRiceviIstanzaMessage" type="msgtype:IstanzaEnteTerzoType"/>
            <xs:element name="ResponseRiceviIstanzaMessage" type="msgtype:HeaderIstanzaEnteTerzoType"/>
             
+           <xs:element name="RequestRiceviIntegrazioneMessage" type="msgtype:IntegrazioneType"/>
+           <xs:element name="ResponseRiceviIntegrazioneMessage" type="msgtype:HeaderIntegrazioneType"/>
             
            <xs:element name="RequestRiceviConclusioneIstanzaMessage" type="msgtype:ConclusioneIstanzaType"/>
            <xs:element name="ResponseRiceviConclusioneIstanzaMessage" type="msgtype:HeaderIstanzaType"/>
@@ -34,6 +35,8 @@
     </wsdl:types>
     
     <!-- MESSAGES -->
+    
+    <!-- Istanza -->
     <wsdl:message name="RequestRiceviIstanzaMessage">
         <wsdl:part name="parameters" element="tns:RequestRiceviIstanzaMessage"/>
     </wsdl:message>
@@ -42,6 +45,17 @@
         <wsdl:part name="parameters" element="tns:ResponseRiceviIstanzaMessage"/>
     </wsdl:message>
     
+    <!-- Integrazione -->
+    <wsdl:message name="RequestRiceviIntegrazioneMessage">
+        <wsdl:part name="parameters" element="tns:RequestRiceviIntegrazioneMessage"/>
+    </wsdl:message>
+    
+    <wsdl:message name="ResponseRiceviIntegrazioneMessage">
+        <wsdl:part name="parameters" element="tns:ResponseRiceviIntegrazioneMessage"/>
+    </wsdl:message>
+    
+    
+    <!-- Conclusione -->
     <wsdl:message name="RequestRiceviConclusioneIstanzaMessage">
         <wsdl:part name="parameters" element="tns:RequestRiceviConclusioneIstanzaMessage"/>
     </wsdl:message>
@@ -49,8 +63,6 @@
     <wsdl:message name="ResponseRiceviConclusioneIstanzaMessage">
         <wsdl:part name="parameters" element="tns:ResponseRiceviConclusioneIstanzaMessage"/>
     </wsdl:message>
-    
-    
    
     <wsdl:message name="EnteTerzoFaultMessage">
 	    <wsdl:part name="fault" element="tns:EnteTerzoFaultMessage" /> 
@@ -65,6 +77,13 @@
             <wsdl:output message="tns:ResponseRiceviIstanzaMessage" name="ResponseRiceviIstanza"/>
             <wsdl:fault message="tns:EnteTerzoFaultMessage" name="EnteTerzoFault"/>
         </wsdl:operation>
+        
+        <wsdl:operation name="RiceviIntegrazione">
+            <wsdl:input message="tns:RequestRiceviIntegrazioneMessage" name="RequestRiceviIntegrazione"/>
+            <wsdl:output message="tns:ResponseRiceviIstanzaMessage" name="ResponseRiceviIntegrazione"/>
+            <wsdl:fault message="tns:EnteTerzoFaultMessage" name="EnteTerzoFault"/>
+        </wsdl:operation>
+        
         
         <wsdl:operation name="RiceviConclusioneIstanza">
             <wsdl:input message="tns:RequestRiceviConclusioneIstanzaMessage" name="RequestRiceviConclusioneIstanza"/>
@@ -87,6 +106,19 @@
                 <wsoap12:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="ResponseRiceviIstanza">              
+                <wsoap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="EnteTerzoFault">
+                <wsoap12:body use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        
+        <wsdl:operation name="RiceviIntegrazione">
+            <wsoap12:operation soapAction="http://www.agid.gov.it/ssu/ws/ente-terzo/service/RiceviIntegrazione" style="document"/>
+            <wsdl:input name="RequestRiceviIntegrazione">              
+                <wsoap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ResponseRiceviIntegrazione">              
                 <wsoap12:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="EnteTerzoFault">

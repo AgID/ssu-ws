@@ -23,7 +23,13 @@
             <xs:element name="RequestRiceviParereEnteTerzoMessage" type="msgtype:ParereEnteTerzoType"/>
             <xs:element name="ResponseRiceviParereEnteTerzoMessage" type="msgtype:HeaderParereEnteTerzoType"/>
             
+
+            <xs:element name="RequestRiceviRichiestaIntegrazioneMessage" type="msgtype:RichiestaIntegrazioneType"/>
+            <xs:element name="ResponseRiceviRichiestaIntegrazioneMessage" type="msgtype:HeaderRichiestaIntegrazioneType"/>
+            
+            
             <xs:element name="BackOfficeFaultMessage" type="msgtype:GenericFaultType"/>
+
             
        
         </xs:schema>
@@ -50,6 +56,15 @@
     </wsdl:message>
     
     
+    <wsdl:message name="RequestRiceviRichiestaIntegrazioneMessage">
+        <wsdl:part name="parameters" element="tns:RequestRiceviRichiestaIntegrazioneMessage"/>
+    </wsdl:message>
+    
+    <wsdl:message name="ResponseRiceviRichiestaIntegrazioneMessage">
+        <wsdl:part name="parameters" element="tns:ResponseRiceviRichiestaIntegrazioneMessage"/>
+    </wsdl:message>
+    
+    
     
     <wsdl:message name="BackOfficeFaultMessage">
 	    <wsdl:part name="fault" element="tns:BackOfficeFaultMessage" /> 
@@ -64,6 +79,13 @@
             <wsdl:output message="tns:ResponseRiceviIstanzaMessage" name="ResponseRiceviIstanza"/>
             <wsdl:fault message="tns:BackOfficeFaultMessage" name="BackOfficeFault"/>
         </wsdl:operation>
+        
+        <wsdl:operation name="RiceviRichiestaIntegrazione">
+            <wsdl:input message="tns:RequestRiceviRichiestaIntegrazioneMessage" name="RequestRiceviRichiestaIntegrazione"/>
+            <wsdl:output message="tns:ResponseRiceviRichiestaIntegrazioneMessage" name="ResponseRiceviRichiestaIntegrazione"/>
+            <wsdl:fault message="tns:BackOfficeFaultMessage" name="BackOfficeFault"/>
+        </wsdl:operation>
+        
         
         <wsdl:operation name="RiceviParereEnteTerzo">
             <wsdl:input message="tns:RequestRiceviParereEnteTerzoMessage" name="RequestRiceviParereEnteTerzo"/>
@@ -81,7 +103,7 @@
         <wsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         
         <wsdl:operation name="RiceviIstanza">
-            <wsoap12:operation soapAction="http://www.agid.gov.it/ssu/ws/ente-terzo/service/RiceviIstanza" style="document"/>
+            <wsoap12:operation soapAction="http://www.agid.gov.it/ssu/ws/back-office/service/RiceviIstanza" style="document"/>
             <wsdl:input name="RequestRiceviIstanza">              
                 <wsoap12:body use="literal"/>
             </wsdl:input>
@@ -93,8 +115,22 @@
             </wsdl:fault>
         </wsdl:operation>
         
+        
+        <wsdl:operation name="RiceviRichiestaIntegrazione">
+            <wsoap12:operation soapAction="http://www.agid.gov.it/ssu/ws/back-office/service/RiceviRichiestaIntegrazione" style="document"/>
+            <wsdl:input name="RequestRiceviRichiestaIntegrazione">              
+                <wsoap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ResponseRiceviRichiestaIntegrazione">              
+                <wsoap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="BackOfficeFault">
+                <wsoap12:body use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        
         <wsdl:operation name="RiceviParereEnteTerzo">
-            <wsoap12:operation soapAction="http://www.agid.gov.it/ssu/ws/ente-terzo/service/RiceviParereEnteTerzo" style="document"/>
+            <wsoap12:operation soapAction="http://www.agid.gov.it/ssu/ws/back-office/service/RiceviParereEnteTerzo" style="document"/>
             <wsdl:input name="RequestRiceviParereEnteTerzo">              
                 <wsoap12:body use="literal"/>
             </wsdl:input>
