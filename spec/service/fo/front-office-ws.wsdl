@@ -6,10 +6,114 @@
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
     xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/"
     
-    
     xmlns:tns="http://www.agid.gov.it/ssu/ws/front-office/service"
     targetNamespace="http://www.agid.gov.it/ssu/ws/front-office/service">
     
+    <wsdl:types>
+        <xs:schema 
+            targetNamespace="http://www.agid.gov.it/ssu/ws/front-office/service"
+            xmlns:msgtype="http://www.agid.gov.it/ssu/ws/message/types">
+            
+            <xs:import namespace="http://www.agid.gov.it/ssu/ws/message/types" schemaLocation="../../types/MessageTypes.xsd" ></xs:import>
+            
+            <xs:element name="RequestRiceviRichiestaIntegrazioneMessage" type="msgtype:RichiestaIntegrazioneType"/>
+            <xs:element name="ResponseRiceviRichiestaIntegrazioneMessage" type="msgtype:HeaderRichiestaIntegrazioneType"/>
+            
+            <xs:element name="RequestRiceviConclusioneIstanzaMessage" type="msgtype:ConclusioneIstanzaType"/>
+            <xs:element name="ResponseRiceviConclusioneIstanzaMessage" type="msgtype:HeaderIstanzaType"/>
+            
+            
+            <xs:element name="FrontOfficeFaultMessage" type="msgtype:GenericFaultType"/>
+            
+        </xs:schema>
+        
+    </wsdl:types>
+    
+    <!-- MESSAGES -->
+    <wsdl:message name="RequestRiceviRichiestaIntegrazioneMessage">
+        <wsdl:part name="parameters" element="tns:RequestRiceviRichiestaIntegrazioneMessage"/>
+    </wsdl:message>
+    
+    <wsdl:message name="ResponseRiceviRichiestaIntegrazioneMessage">
+        <wsdl:part name="parameters" element="tns:ResponseRiceviRichiestaIntegrazioneMessage"/>
+    </wsdl:message>
+    
+    <!-- Conclusione -->
+    <wsdl:message name="RequestRiceviConclusioneIstanzaMessage">
+        <wsdl:part name="parameters" element="tns:RequestRiceviConclusioneIstanzaMessage"/>
+    </wsdl:message>
+    
+    <wsdl:message name="ResponseRiceviConclusioneIstanzaMessage">
+        <wsdl:part name="parameters" element="tns:ResponseRiceviConclusioneIstanzaMessage"/>
+    </wsdl:message>
+    
+    
+    
+   
+    
+    <wsdl:message name="FrontOfficeFaultMessage">
+        <wsdl:part name="fault" element="tns:FrontOfficeFaultMessage" /> 
+    </wsdl:message>
+    
+    <!-- PORT TYPE -->
+    <wsdl:portType name="FrontOfficeServicePort">
+    
+        <wsdl:operation name="RiceviRichiestaIntegrazione">
+            <wsdl:input message="tns:RequestRiceviRichiestaIntegrazioneMessage" name="RequestRiceviRichiestaIntegrazione"/>
+            <wsdl:output message="tns:ResponseRiceviRichiestaIntegrazioneMessage" name="ResponseRiceviRichiestaIntegrazione"/>
+            <wsdl:fault message="tns:FrontOfficeFaultMessage" name="FrontOfficeFault"/>
+        </wsdl:operation>
+        
+        <wsdl:operation name="RiceviConclusioneIstanza">
+            <wsdl:input message="tns:RequestRiceviConclusioneIstanzaMessage" name="RequestRiceviConclusioneIstanza"/>
+            <wsdl:output message="tns:ResponseRiceviConclusioneIstanzaMessage" name="ResponseRiceviConclusioneIstanza"/>
+            <wsdl:fault message="tns:FrontOfficeFaultMessage" name="FrontOfficeFault"/>
+        </wsdl:operation>
+        
+    </wsdl:portType>
+    
+    <!-- PORT BINDING -->
+    
+    <wsdl:binding name="FrontOfficeServiceBinding" type="tns:FrontOfficeServicePort">
+        <wsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        
+        <wsdl:operation name="RiceviRichiestaIntegrazione">
+            <wsoap12:operation soapAction="http://www.agid.gov.it/ssu/ws/front-office/service/RiceviRichiestaIntegrazione" style="document"/>
+            <wsdl:input name="RequestRiceviRichiestaIntegrazione">              
+                <wsoap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ResponseRiceviRichiestaIntegrazione">              
+                <wsoap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="FrontOfficeFault">
+                <wsoap12:body use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        
+        <wsdl:operation name="RiceviConclusioneIstanza">
+            <wsoap12:operation soapAction="http://www.agid.gov.it/ssu/ws/front-office/service/RiceviConclusioneIstanza" style="document"/>
+            <wsdl:input name="RequestRiceviConclusioneIstanza">              
+                <wsoap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ResponseRiceviConclusioneIstanza">              
+                <wsoap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="FrontOfficeFault">
+                <wsoap12:body use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        
+        
+    </wsdl:binding>
+    
+    
+    <!-- SERVICE  -->  
+    
+    <wsdl:service name="FrontOfficeService">
+        <wsdl:port binding="tns:FrontOfficeServiceBinding" name="FrontOfficeService">
+            <soap:address location="http://localhost:8080/ssu-test/front-office/ws"/>
+        </wsdl:port>
+    </wsdl:service>
     
     
 </wsdl:definitions>
