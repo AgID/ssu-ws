@@ -186,18 +186,11 @@
     <xs:complexType name="PayloadParereEnteTerzoType">
         <xs:sequence>
             <xs:element name="Esito" type="msgtype:EsitoParereEnteTerzoType"/>
-            <xs:element name="Parere">
-                <xs:complexType >
-                    <xs:sequence>
-                        <xs:element name="BinaryFile" type="msgtype:BinaryFileType"/>
-                        <xs:element name="XMLBinaryFile" type="msgtype:BinaryFileType" minOccurs="0"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
+            <xs:element name="Parere" type="msgtype:FileType"/>
             <xs:element name="AltriAllegati">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="Allegato" type="msgtype:BinaryFileType" minOccurs="0" maxOccurs="unbounded" />
+                        <xs:element name="Allegato" type="msgtype:FileType" minOccurs="0" maxOccurs="unbounded" />
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
