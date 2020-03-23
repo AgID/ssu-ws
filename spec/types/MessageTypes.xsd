@@ -24,7 +24,8 @@
         <xs:sequence>
             <xs:element name="ID" type="msgtype:IDIstanzaType"/>
             <xs:element name="IDProcedimento" type="msgtype:IDProcedimentoType"/>
-            <xs:element name="RiferimentoComune" type="msgtype:CodiceIstatComuneType"/>
+            <xs:element name="RiferimentoTerritoriale" type="msgtype:CodiceIstatComuneType"/>
+            <xs:element name="EnteCompetente" type="msgtype:IPACodeType"/>
         </xs:sequence>
     </xs:complexType>
     
@@ -284,6 +285,17 @@
     <xs:simpleType name="CodiceIstatComuneType">
         <xs:restriction base="xs:string">
             <xs:pattern value="[0-9]{6}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    
+    <xs:simpleType name="IPACodeType">
+        <xs:restriction base="xs:string">
+               <xs:annotation>
+                   <xs:documentation>
+                       Codice Amministrazione nell'Indice delle Pubbliche Amministrazioni
+                   </xs:documentation>
+               </xs:annotation>
         </xs:restriction>
     </xs:simpleType>
     
