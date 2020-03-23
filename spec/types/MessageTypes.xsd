@@ -273,8 +273,15 @@
     </xs:simpleType>
     
     <xs:simpleType name="IDIstanzaType">
-        <xs:restriction base="xs:string"/>
-    </xs:simpleType>
+        <xs:restriction base="xs:string">
+            <xs:annotation>
+                <xs:documentation>
+                    Codice identificativo univoco dell'istanza nell'ambito dell'ente competente per la presentazione
+                </xs:documentation>
+            </xs:annotation>
+        </xs:restriction>
+    </xs:simpleType>    
+    
     <xs:simpleType name="IDProcedimentoType">
         <xs:restriction base="xs:nonNegativeInteger"/>
     </xs:simpleType>
