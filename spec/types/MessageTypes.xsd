@@ -273,7 +273,7 @@
     </xs:simpleType>
     
     <xs:simpleType name="IDIstanzaType">
-        <xs:restriction base="xs:nonNegativeInteger"/>
+        <xs:restriction base="xs:string"/>
     </xs:simpleType>
     <xs:simpleType name="IDProcedimentoType">
         <xs:restriction base="xs:nonNegativeInteger"/>
