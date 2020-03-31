@@ -375,18 +375,18 @@
       
     <!-- Simple Type -->   
     
-    
-    
+
     <xs:simpleType name="StructuredSignatureType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="XAdES"/>               
-            <xs:enumeration value="None">
+            <xs:enumeration value="Hand">
                 <xs:annotation>
                     <xs:documentation>
-                        Identifica la firma autografa o assenza di firma
+                        Identifica la firma autografa
                     </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="None"/>
         </xs:restriction>
     </xs:simpleType>
     
@@ -394,10 +394,11 @@
         <xs:restriction base="xs:string">
             <xs:enumeration value="PAdES"/> 
             <xs:enumeration value="CAdES"/>
-            <xs:enumeration value="None">
+            <xs:enumeration value="None"/> 
+            <xs:enumeration value="Hand">
                 <xs:annotation>
                     <xs:documentation>
-                        Identifica la firma autografa o assenza di firma
+                        Identifica la firma autografa
                     </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
