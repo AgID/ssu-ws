@@ -26,7 +26,7 @@
             <xs:element name="IDProcedimento" type="msgtype:IDProcedimentoType"/>
             <xs:element name="RiferimentoTerritoriale" type="msgtype:CodiceIstatComuneType"/>
             <xs:element name="EnteCompetente" type="msgtype:IPACodeType"/>
-            <xs:element name="MessageHash" type="msgtype:HashType">
+            <xs:element name="PayloadHash" type="msgtype:HashType">
                 <xs:annotation>
                     <xs:documentation>
                         Hash del messaggio utile sia per controlli di integrità che come correlation key per gli ack di risposta
@@ -235,30 +235,18 @@
         </xs:complexContent>
     </xs:complexType>
     
-    
+
     <xs:complexType name="StructuredFileType">
-        <xs:choice>
-            <xs:element name="XMLSigned" type="msgtype:SignedXMLFileType"/>
-            <xs:element name="XMLNotSigned" >
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="XMLFile" type="msgtype:XMLFileType"/>
-                        <xs:element name="XMLRepresetationFile" type="msgtype:UnstructuredFileType"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>  
-        </xs:choice>
+        <xs:sequence>
+            <xs:element name="XMLFile" type="msgtype:XMLFileType"/>
+            <xs:sequence minOccurs="0">
+                <xs:element name="XMLRepresetationFile" type="msgtype:FileModeType" />
+                <xs:element name="IdentityDocument" type="msgtype:FileModeType" />
+            </xs:sequence>
+        </xs:sequence>
+        <xs:attribute name="signature" type="msgtype:StructuredSignatureType" use="required"/>
     </xs:complexType>
-    
-    
-    <xs:complexType name="SignedXMLFileType">
-        <xs:complexContent>
-            <xs:extension base="msgtype:XMLFileType">
-                <xs:attribute name="signature" type="msgtype:StructuredSignatureType" fixed="XAdES" use="required"/>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    
+     
     <xs:complexType name="XMLFileType">
         <xs:complexContent>
             <xs:extension base="msgtype:FileModeType">
@@ -368,25 +356,27 @@
  
     <xs:complexType name="HashType">
         <xs:choice>
-            <xs:element name="SHA256" type="msgtype:SHA256Type" />
-            <xs:element name="SHA512" type="msgtype:SHA512Type" />
+            <xs:element name="SHA224" type="msgtype:SHA32BitType" />
+            <xs:element name="SHA256" type="msgtype:SHA32BitType" />
+            <xs:element name="SHA384" type="msgtype:SHA64BitType" />
+            <xs:element name="SHA512" type="msgtype:SHA64BitType" />
         </xs:choice>
     </xs:complexType>
       
     <!-- Simple Type -->   
     
-    
-    
+
     <xs:simpleType name="StructuredSignatureType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="XAdES"/>               
-            <xs:enumeration value="None">
+            <xs:enumeration value="Hand">
                 <xs:annotation>
                     <xs:documentation>
-                        Identifica la firma autografa o assenza di firma
+                        Identifica la firma autografa
                     </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="None"/>
         </xs:restriction>
     </xs:simpleType>
     
@@ -394,13 +384,14 @@
         <xs:restriction base="xs:string">
             <xs:enumeration value="PAdES"/> 
             <xs:enumeration value="CAdES"/>
-            <xs:enumeration value="None">
+            <xs:enumeration value="Hand">
                 <xs:annotation>
                     <xs:documentation>
-                        Identifica la firma autografa o assenza di firma
+                        Identifica la firma autografa
                     </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="None"/> 
         </xs:restriction>
     </xs:simpleType>  
  
@@ -414,16 +405,20 @@
         </xs:restriction>
     </xs:simpleType>  
       
-    <xs:simpleType name="SHA256Type">
+    <xs:simpleType name="SHA32BitType">
         <xs:restriction base="xs:hexBinary">
             <xs:length value="32"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="SHA512Type">
+    
+    <xs:simpleType name="SHA64BitType">
         <xs:restriction base="xs:hexBinary">
             <xs:length value="64"/>
         </xs:restriction>
     </xs:simpleType>
+   
+   
+    
     
     <xs:simpleType name="IDIstanzaType">
         <xs:restriction base="xs:string">
