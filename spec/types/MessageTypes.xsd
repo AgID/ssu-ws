@@ -235,30 +235,18 @@
         </xs:complexContent>
     </xs:complexType>
     
-    
+
     <xs:complexType name="StructuredFileType">
-        <xs:choice>
-            <xs:element name="XMLSigned" type="msgtype:SignedXMLFileType"/>
-            <xs:element name="XMLNotSigned" >
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="XMLFile" type="msgtype:XMLFileType"/>
-                        <xs:element name="XMLRepresetationFile" type="msgtype:UnstructuredFileType"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>  
-        </xs:choice>
+        <xs:sequence>
+            <xs:element name="XMLFile" type="msgtype:XMLFileType"/>
+            <xs:sequence minOccurs="0">
+                <xs:element name="XMLRepresetationFile" type="msgtype:FileModeType" />
+                <xs:element name="IdentityDocument" type="msgtype:FileModeType" />
+            </xs:sequence>
+        </xs:sequence>
+        <xs:attribute name="signature" type="msgtype:StructuredSignatureType" use="required"/>
     </xs:complexType>
-    
-    
-    <xs:complexType name="SignedXMLFileType">
-        <xs:complexContent>
-            <xs:extension base="msgtype:XMLFileType">
-                <xs:attribute name="signature" type="msgtype:StructuredSignatureType" fixed="XAdES" use="required"/>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    
+     
     <xs:complexType name="XMLFileType">
         <xs:complexContent>
             <xs:extension base="msgtype:FileModeType">
@@ -394,7 +382,6 @@
         <xs:restriction base="xs:string">
             <xs:enumeration value="PAdES"/> 
             <xs:enumeration value="CAdES"/>
-            <xs:enumeration value="None"/> 
             <xs:enumeration value="Hand">
                 <xs:annotation>
                     <xs:documentation>
@@ -402,6 +389,7 @@
                     </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="None"/> 
         </xs:restriction>
     </xs:simpleType>  
  
