@@ -217,35 +217,30 @@
     </xs:complexType>
     
     
+    <xs:complexType name="UnstructuredFileType">
+        <xs:complexContent>
+            <xs:extension base="msgtype:FileModeType">
+                <xs:sequence>
+                    <xs:element name="IdentityDocument" type="msgtype:FileModeType" minOccurs="0"/>
+                </xs:sequence>
+                <xs:attribute name="signature" type="msgtype:UnstructuredSignatureType" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    
     <xs:complexType name="StructuredFileType">
         <xs:choice>
-            <xs:element name="Signed" type="msgtype:SignedXMLFileType"/>
-            <xs:element name="Unsigned" >
+            <xs:element name="XMLSigned" type="msgtype:SignedXMLFileType"/>
+            <xs:element name="XMLNotSigned" >
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="XMLFile" type="msgtype:XMLFileType"/>
-                        <xs:element name="UnstructuredFile" type="msgtype:UnsignedUnstructuredFileType"/>
+                        <xs:element name="XMLRepresetationFile" type="msgtype:UnstructuredFileType"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>  
         </xs:choice>
-    </xs:complexType>
-    
-    
-    <xs:complexType name="UnsignedUnstructuredFileType">
-        <xs:complexContent>
-            <xs:extension base="msgtype:FileModeType">
-                <xs:attribute name="signature" type="msgtype:UnstructuredSignatureType" fixed="None" use="required"/>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    
-    <xs:complexType name="UnstructuredFileType">
-        <xs:complexContent>
-            <xs:extension base="msgtype:FileModeType">
-                <xs:attribute name="signature" type="msgtype:UnstructuredSignatureType"/>
-            </xs:extension>
-        </xs:complexContent>
     </xs:complexType>
     
     
@@ -265,7 +260,7 @@
         </xs:complexContent>
     </xs:complexType>
     
-    
+   
     
     
     
@@ -381,7 +376,7 @@
             <xs:enumeration value="None">
                 <xs:annotation>
                     <xs:documentation>
-                        Identifica la firma autografa
+                        Identifica la firma autografa o assenza di firma
                     </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
@@ -395,13 +390,13 @@
             <xs:enumeration value="None">
                 <xs:annotation>
                     <xs:documentation>
-                        Identifica la firma autografa
+                        Identifica la firma autografa o assenza di firma
                     </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>  
-      
+ 
     <xs:simpleType name="FileNameType">
         <xs:restriction base="xs:string">
             <xs:pattern value="[a-zA-Z0-9._ -]+"/>
