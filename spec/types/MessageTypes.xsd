@@ -356,8 +356,10 @@
  
     <xs:complexType name="HashType">
         <xs:choice>
-            <xs:element name="SHA256" type="msgtype:SHA256Type" />
-            <xs:element name="SHA512" type="msgtype:SHA512Type" />
+            <xs:element name="SHA224" type="msgtype:SHA32BitType" />
+            <xs:element name="SHA256" type="msgtype:SHA32BitType" />
+            <xs:element name="SHA384" type="msgtype:SHA64BitType" />
+            <xs:element name="SHA512" type="msgtype:SHA64BitType" />
         </xs:choice>
     </xs:complexType>
       
@@ -403,16 +405,20 @@
         </xs:restriction>
     </xs:simpleType>  
       
-    <xs:simpleType name="SHA256Type">
+    <xs:simpleType name="SHA32BitType">
         <xs:restriction base="xs:hexBinary">
             <xs:length value="32"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="SHA512Type">
+    
+    <xs:simpleType name="SHA64BitType">
         <xs:restriction base="xs:hexBinary">
             <xs:length value="64"/>
         </xs:restriction>
     </xs:simpleType>
+   
+   
+    
     
     <xs:simpleType name="IDIstanzaType">
         <xs:restriction base="xs:string">
