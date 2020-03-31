@@ -26,7 +26,7 @@
             <xs:element name="IDProcedimento" type="msgtype:IDProcedimentoType"/>
             <xs:element name="RiferimentoTerritoriale" type="msgtype:CodiceIstatComuneType"/>
             <xs:element name="EnteCompetente" type="msgtype:IPACodeType"/>
-            <xs:element name="MessageHash" type="msgtype:HashType">
+            <xs:element name="PayloadHash" type="msgtype:HashType">
                 <xs:annotation>
                     <xs:documentation>
                         Hash del messaggio utile sia per controlli di integrità che come correlation key per gli ack di risposta
